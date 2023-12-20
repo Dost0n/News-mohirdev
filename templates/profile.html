@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Profile {% endblock %}
+{% block content %}
+<section id="contentSection">
+  <div class="row">
+    <h1>Hush kelibsiz {{request.user}}</h1>
+    <h1> Date of birth: {{profile.date_of_birth}}</h1>
+    <img src="{{profile.photo.url}}" alt="Mening rasmim">
+    <p> <a href="{% url 'password_change' %}">Parolni almashtirish</a></p>
+    <p> <a href="{% url 'logout' %}">Profildan chiqish</a></p>
+    <p> <a href="{% url 'edit-profile' %}">Ma'lumotlarni o'zgartirish.</a></p>
+  </div>
+</section>
+{% endblock %}

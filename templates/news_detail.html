@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% load static %}
+{% load hitcount_tags %}
+{% block title %} Single {% endblock %}
+{% block content %}
+<section id="contentSection">
+  <div class="row">
+    <div class="col-lg-8 col-md-8 col-sm-8">
+      <div class="left_content">
+        <div class="single_page">
+          <h1>{{post.title}}</h1>
+          <div class="post_commentbox"> <a href="#"><i class="fa fa-user"></i>Wpfreeware</a> <span><i class="fa fa-calendar"></i>{{post.publish_time}}</span> <a href="#"><i class="fa fa-tags"></i>{{post.category}}</a> </div>
+          <div class="single_page_content"> <img class="img-center" src="{{ post.image.url }}" alt="">
+            <p>{{ post.body }}</p>
+            <blockquote></blockquote>
+            <p> <i class="fa fa-eye"></i> Korishlar soni : {% get_hit_count for post %}</p>
+          </div>
+          {% if request.user.is_superuser %}
+            <a href="{% url 'update' post.slug %}">Update</a>
+            <a href="{% url 'delete' post.slug %}">Delete</a>
+          {% endif %} <br>
+          <p> <i class="fa fa-eye"></i> Izohlar soni : {{ comment_count }}</p>
+          {% for comment in comments %}
+          <div class="comment">
+            <p> {{comment.user}} <span>{{comment.created_time}}</span></p>
+            <p>{{ comment.body | linebreaks }}</p>
+          </div>
+          {% endfor %}
+          
+          <div class="com-md-8 card mb-4 mt-3">
+            <div class="card-body">
+              {% if request.user.is_authenticated %}
+              <h3>Izoh qoldirish</h3>
+              <form action="" method="post">
+                {% csrf_token %}
+                {{comment_form.as_p}}
+                <button type="submit">Yuborish</button>
+              </form>
+              {% else %}
+              <p>Izoh qoldirish uchun <a href="{% url 'login' %}">ro'yhatdan o'tishin</a>giz zarur.</p>
+              {% endif %}
+            </div>
+          </div>
+          
+          <div class="related_post">
+            <h2>Related Post <i class="fa fa-thumbs-o-up"></i></h2>
+            <ul class="spost_nav wow fadeInDown animated">
+              {% for post in related_posts %}
+                <li>
+                  <div class="media wow fadeInDown"> <a href="{% url 'single' post.slug %}" class="media-left"> <img alt="" src="{{post.image.url}}"> </a>
+                    <div class="media-body"> <a href="{% url 'single' post.slug %}" class="catg_title"> {{post.body|truncatewords:5 }}</a> </div>
+                  </div>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-4">
+      <aside class="right_content">
+        <div class="single_sidebar">
+          <h2><span>Popular Post</span></h2>
+          <ul class="spost_nav">
+            {% for post in popular_posts %}
+                <li>
+                  <div class="media wow fadeInDown"> <a href="{% url 'single' post.slug %}" class="media-left"> <img alt="" src="{{post.image.url}}"> </a>
+                    <div class="media-body"> <a href="{% url 'single' post.slug %}" class="catg_title"> {{post.body|truncatewords:5 }}</a> </div>
+                  </div>
+                </li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="single_sidebar">
+          <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#category" aria-controls="home" role="tab" data-toggle="tab">Category</a></li>
+          </ul>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="category">
+              <ul>
+                {% for category in categories %}
+                <li class="cat-item"><a href="#">{{category}}</a></li>
+                {% endfor %}
+              </ul>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="video">
+              <div class="vide_area">
+                <iframe width="100%" height="250" src="http://www.youtube.com/embed/h5QWbURNEpA?feature=player_detailpage" frameborder="0" allowfullscreen></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+{% endblock %}

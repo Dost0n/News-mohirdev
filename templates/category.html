@@ -1,0 +1,91 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Category  {% endblock %}
+{% block content %}
+<section id="sliderSection">
+  <div class="row">
+    <div class="col-lg-8 col-md-8 col-sm-8">
+      <div class="slick_slider">
+        {% for post in important_posts %}
+        <div class="single_iteam"> <a href="{% url 'single' post.slug %}"> <img src="{{post.image.url}}" alt=""></a>
+          <div class="slider_article">
+            <h2><a class="slider_tittle" href="{% url 'single' post.slug %}">{{post.title}}</a></h2>
+            <p>{{ post.body|truncatewords:20}}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-4">
+      <div class="latest_post">
+        <h2><span>Oxirgi yangiliklar</span></h2>
+        <div class="latest_post_container">
+          <div id="prev-button"><i class="fa fa-chevron-up"></i></div>
+          <ul class="latest_postnav">
+            {% for post in latest_posts %}
+            <li>
+              <div class="media"> <a href="{% url 'single' post.slug %}" class="media-left"> <img alt="" src={{post.image.url}}> </a>
+                <div class="media-body"> <a href="{% url 'single' post.slug %}" class="catg_title">{{post.title}}</a> </div>
+              </div>
+            </li>
+            {% endfor %}
+          </ul>
+          <div id="next-button"><i class="fa  fa-chevron-down"></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="contentSection">
+  <div class="row">
+    <div class="col-lg-8 col-md-8 col-sm-8">
+      <div class="left_content">
+        <div class="single_post_content">
+          <h2><span>{{category_name}}</span></h2>
+          {% for post in news %}
+            <div class="col-lg-4 col-md-4 col-sm-4">
+                <ul class="business_catgnav  wow fadeInDown">
+                <li>
+                    <figure class="bsbig_fig"> <a href="{% url 'single' post.slug %}" class="featured_img"> <img alt="" src="{{post.image.url}}"> <span class="overlay"></span> </a>
+                    <figcaption> <a href="{% url 'single' post.slug %}">{{post.title}}</a> </figcaption>
+                    <p>{{post.body |truncatewords:20 }}</p>
+                    </figure>
+                </li>
+                </ul>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-4">
+      <aside class="right_content">
+        <div class="single_sidebar">
+          <h2><span>Ommaviy yangiliklar</span></h2>
+          <ul class="spost_nav">
+            {% for post in popular_posts %}
+                <li>
+                  <div class="media wow fadeInDown"> <a href="{% url 'single' post.slug %}" class="media-left"> <img alt="" src="{{post.image.url}}"> </a>
+                    <div class="media-body"> <a href="{% url 'single' post.slug %}" class="catg_title"> {{post.body|truncatewords:5 }}</a> </div>
+                  </div>
+                </li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="single_sidebar">
+            <h2><span>Category</span></h2>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="category">
+              <ul>
+                {% for category in categories %}
+                    <li class="cat-item"><a href="{% url 'category' category.pk %}">{{category}}</a></li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+{% endblock %}

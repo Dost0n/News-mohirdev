@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block title %} Feed News {% endblock %}
+
+
+{% block content %}
+
+<h2 class="text-center"> Yangilikni qo'shish </h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit" class="btn btn-info"> Qo'shish</button>
+</form>
+
+{% endblock %}

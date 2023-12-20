@@ -1,0 +1,9 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Ro'yhatdan o'tish {% endblock %}
+{% block content %}
+
+<h1>Tabriklaymiz {{new_user.username}} siz ro'yhatdan o'tdingiz!!!</h1>
+<p> Endi saytga <a href="{% url 'login' %}">login</a> qilishingiz mumkin.</p>
+{% endblock %}

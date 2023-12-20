@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Login Page {% endblock %}
+{% block content %}
+<section id="contentSection">
+  <div class="row">
+    <div class="col-lg-8 col-md-8 col-sm-8">
+      <div class="left_content">
+        <div class="contact_area">
+          <h2>Login</h2>
+          <form action="#" class="contact_form" method="post">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type="submit" value="Yuborish">
+          </form>
+        </div>
+      </div>
+      <p><a href="{% url 'password_reset' %}">Parolni unutdingizmi?</a></p>
+      <p>AGAR RO'YHATDAN O'TMAGAN BO'LSANGIZ <a href="{% url 'signup' %}"> RO'YHATDAN O'TISHINGIZ </a> MUMKIN </p>  
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-4">
+      <aside class="right_content">
+        <div class="single_sidebar">
+          <h2><span>Ommaviy yangiliklar</span></h2>
+          <ul class="spost_nav">
+            {% for post in popular_posts %}
+                <li>
+                  <div class="media wow fadeInDown"> <a href="{% url 'single' post.slug %}" class="media-left"> <img alt="" src="{{post.image.url}}"> </a>
+                    <div class="media-body"> <a href="{% url 'single' post.slug %}" class="catg_title"> {{post.body|truncatewords:5 }}</a> </div>
+                  </div>
+                </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+{% endblock %}

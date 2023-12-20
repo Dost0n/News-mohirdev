@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+
+{% block title %} Feed News {% endblock %}
+
+
+{% block content %}
+
+<h2 class="text-center"> Joriy yangilikni o'chirish </h2>
+<form method="post">
+    {% csrf_token %}
+    <p>{{news.title}}</p>
+    <button type="submit" class="btn btn-danger"> O'chirish</button>
+</form>
+
+{% endblock %}
